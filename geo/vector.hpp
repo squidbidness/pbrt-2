@@ -1,6 +1,8 @@
 #ifndef VECTOR_HPP_DA39A3EE
 #define VECTOR_HPP_DA39A3EE
 
+#include "lib/loops.hpp"
+
 #include <array>
 #include <cinttypes>
 #include <type_traits>
@@ -56,6 +58,21 @@ namespace geo {
             }
             Scalar const & operator []( size_t i ) const {
                 return m_data[i];
+            }
+
+            friend
+            std::ostream & operator <<( std::ostream &o, V const &v ) {
+                using lib::forAndBetween;
+
+                o << "(";
+                forAndBetween(
+                        v.m_data,
+                        [&o] ( auto && scalar ) { o << scalar; },
+                        [&o] () { o << ", "; }
+                        );
+                o << ")";
+
+                return o;
             }
 
         protected:

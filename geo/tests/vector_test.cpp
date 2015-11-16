@@ -14,7 +14,5 @@ int main( int argc, char **argv ) {
     Vector3 v;
     v.x = 3.0f;
 
-    cout << v.x << endl;
-
-    streamer( cout, 23, " ", 24, ", ", 2+2 );
+    cout << v << endl;
 }
