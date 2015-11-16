@@ -90,12 +90,13 @@ namespace lib {
 
         using detail::doBetweenOp;
         while ( next != end ) {
-            op( *curr++ );
+            op( *curr );
             doBetweenOp(
                     std::forward<Range>( range ),
                     std::forward<BetweenOp>( betweenOp ),
                     *curr,
                     *next );
+            ++curr;
             ++next;
         }
         op( *curr );
