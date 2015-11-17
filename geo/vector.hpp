@@ -5,6 +5,7 @@
 
 #include <array>
 #include <cinttypes>
+#include <iostream>
 #include <type_traits>
 
 
@@ -156,10 +157,10 @@ namespace geo {
     };
 
 
-    using Vector3 = Vector< float, 3 >;
-    using Vector3L = Vector< double, 3 >;
-    using Vector4 = Vector< float, 4 >;
-    using Vector$L = Vector< double, 4 >;
+    using VectorF3 = Vector< float, 3 >;
+    using VectorD3 = Vector< double, 3 >;
+    using VectorF4 = Vector< float, 4 >;
+    using VectorD4 = Vector< double, 4 >;
 
 } // namespace geo
 
