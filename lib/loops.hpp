@@ -60,6 +60,17 @@ namespace lib {
             op( std::forward<Value>(a), std::forward<Value>(b) );
         }
 
+
+        template <
+                typename Range,
+                typename Op >
+        using IsIndexedForOp =
+                std::is_convertible<
+                    Op,
+                    std::function< void(RangeValueType<Range>, size_t) >
+                >;
+
+
     } // namespace detail
 
     template <
@@ -100,6 +111,21 @@ namespace lib {
             ++next;
         }
         op( *curr );
+    }
+
+
+    template <
+            typename Range,
+            typename Op,
+
+            typename = std::enable_if_t<
+                    detail::IsIndexedForOp< Range, Op >::value >
+            >
+    void forIndexed( Range &&range, Op &&op ) {
+        size_t i = 0;
+        for ( auto &&value : range ) {
+            op( value, i++ );
+        }
     }
 
 }

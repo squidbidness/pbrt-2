@@ -85,18 +85,12 @@ namespace geo {
             size_t Dim
         >
         struct ComponentBased< Derived<Scalar, Dim> >
-                : public ComponentBasedConcept< Scalar, Dim >
+                : public std::array< Scalar, Dim >
+                , public ComponentBasedConcept< Scalar, Dim >
                 , public ComponentBasedMixinCumulative<
                         ComponentBased<Derived<Scalar, Dim>>, Scalar, Dim >
         {
             using V = Derived< Scalar, Dim >;
-
-            Scalar & operator []( size_t i ) { return m_data[i]; }
-            Scalar const & operator []( size_t i ) const { return m_data[i]; }
-
-            //! @throw std::out_of_range if @arg i is too large
-            Scalar & at( size_t i ) { return m_data.at(i); }
-            Scalar const & at( size_t i ) const { return m_data.at(i); }
 
 
             friend
@@ -127,7 +121,14 @@ namespace geo {
             // available for internal use
             friend
             V operator +( V const &u, V const &v ) {
-                return V( u.m_data + v.m_data );
+                V ret;
+                lib::forIndexed(
+                        ret,
+                        [&u, &v] ( auto &&value, size_t i ) {
+                            value = u[i] + v[i];
+                        }
+                        );
+                return ret;
             }
             V & operator +=( V const &u ) {
                 m_data += u.m_data;
@@ -142,15 +143,26 @@ namespace geo {
             V const & derived() const { return *static_cast<V const *>( this ); }
         };
 
+
+        template < typename Scalar, size_t Dim >
+        struct VectorBase : public ComponentBased< VectorBase<Scalar, Dim> > {
+            using Base = ComponentBased< VectorBase<Scalar, Dim> >;
+
+            using Base::operator +=;
+        };
+
     } // namespace detail
 
     template < typename Scalar, size_t Dim >
-    struct Vector : public detail::ComponentBased< Vector<Scalar, Dim> > {
-
-        using Base = detail::ComponentBased< Vector<Scalar, Dim> >;
-        using Base::Base;
-        friend struct detail::ComponentBased< Vector<Scalar, Dim> >;
+    struct Vector : public detail::VectorBase< Scalar, Dim> {
     };
+
+    template < typename Scalar >
+    struct Vector< Scalar, 3 >
+            : public detail::VectorBase< Scalar, 3 >
+    {
+    };
+
 
     using Vector3 = Vector< float, 3 >;
     using VectorD3 = Vector< double, 3 >;
