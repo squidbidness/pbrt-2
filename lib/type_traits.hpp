@@ -5,6 +5,11 @@
 
 namespace lib {
 
+
+    template < typename T >
+    using Type = typename T::type;
+
+
     template <bool B>
     using bool_constant = std::integral_constant< bool, B >;
 
@@ -39,6 +44,37 @@ namespace lib {
     struct negation
         : bool_constant< !B::value >
     { };
+
+
+    template < size_t A, size_t B >
+    struct Less {
+        static constexpr bool value = ( A < B );
+    };
+
+    template < size_t A, size_t B >
+    struct LessEq {
+        static constexpr bool value = ( A <= B );
+    };
+
+    template < size_t A, size_t B >
+    struct Greater {
+        static constexpr bool value = ( A > B );
+    };
+
+    template < size_t A, size_t B >
+    struct GreaterEq {
+        static constexpr bool value = ( A >= B );
+    };
+
+    template < size_t A, size_t B >
+    struct Equal {
+        static constexpr bool value = ( A == B );
+    };
+
+    template < size_t A, size_t B >
+    struct NotEqual {
+        static constexpr bool value = ( A != B );
+    };
 
 } // namespace lib
 
