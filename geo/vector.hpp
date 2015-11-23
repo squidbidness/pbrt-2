@@ -9,24 +9,49 @@ namespace geo {
 
     namespace detail {
 
-        template < typename Scalar, size_t Dim >
-        struct VectorBase : public ComponentBased< VectorBase<Scalar, Dim> > {
-            using Base = ComponentBased< VectorBase<Scalar, Dim> >;
+        template < typename Derived, typename Scalar, size_t Dim >
+        struct VectorBase
+                : public ComponentBased<
+                        VectorBase< Derived, Scalar, Dim >,
+                        Scalar,
+                        Dim
+                        >
+        {
+            using Base = ComponentBased<
+                    VectorBase< Derived, Scalar, Dim >,
+                    Scalar,
+                    Dim
+                    >;
+            using Base::Base;
 
-            using Base::operator +=;
+            Derived &operator +=( Derived const &other ) {
+                return operatorPlusAssignment( *this, other );
+            }
+            friend
+            Derived operator +( Derived const &lhs, Derived const &rhs ) {
+                return Base::template operatorPlus<Derived>( lhs, rhs );
+            }
+
+
+        private:
+
+            Derived & derived() { return *static_cast<Derived *>( this ); }
+            Derived const & derived() const {
+                return *static_cast<Derived const *>( this );
+            }
         };
 
     } // namespace detail
 
     template < typename Scalar, size_t Dim >
-    struct Vector : public detail::VectorBase< Scalar, Dim> {
-    };
+    struct Vector
+            : public detail::VectorBase< Vector<Scalar, Dim>, Scalar, Dim >
+    { };
 
     template < typename Scalar >
     struct Vector< Scalar, 3 >
-            : public detail::VectorBase< Scalar, 3 >
-    {
-    };
+            : public detail::VectorBase< Vector<Scalar, 3>, Scalar, 3 >
+    { };
 
     using Vector3 = Vector< float, 3 >;
     using VectorD3 = Vector< double, 3 >;
