@@ -53,9 +53,16 @@ namespace geo {
             : public detail::VectorBase< Vector<Scalar, 3>, Scalar, 3 >
     { };
 
-    using Vector3 = Vector< float, 3 >;
+    template < size_t Dim >
+    using VectorF = Vector< float, Dim >;
+    template < size_t Dim >
+    using VectorD = Vector< double, Dim >;
+
+    using VectorF2 = Vector< float, 2 >;
+    using VectorD2 = Vector< double, 2 >;
+    using VectorF3 = Vector< float, 3 >;
     using VectorD3 = Vector< double, 3 >;
-    using Vector4 = Vector< float, 4 >;
+    using VectorF4 = Vector< float, 4 >;
     using VectorD4 = Vector< double, 4 >;
 
 } // namespace geo
