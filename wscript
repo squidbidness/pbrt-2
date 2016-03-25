@@ -38,7 +38,7 @@ def options(opt):
 
 def configure(conf):
 	conf.load("compiler_cxx")
-	conf.env.append_value("CXXFLAGS", ["-O2", "-g", "--std=c++14"])
+	conf.env.append_value("CXXFLAGS", ["-O2", "-g", "--std=c++1z", "-fconcepts"])
 	conf.env.INCLUDES = system_include_paths
 
 def build(bld):
