@@ -5,7 +5,6 @@
 
 namespace lib {
 
-
 	template < typename T >
 	using Type = typename T::type;
 
