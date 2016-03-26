@@ -51,6 +51,6 @@ def build(bld):
 		bld.program(
 				source=["{t}.cpp".format(t=test)] + srcs, 
 				target="{bin}/{bin_name}".format(
-                        bin=bin_dir, bin_name=path.basename(test)),
+						bin=bin_dir, bin_name=path.basename(test)),
 				includes=include_paths
 				)
