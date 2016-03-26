@@ -21,14 +21,17 @@ namespace geo {
 				size_t Dim,
 
 				typename = std::enable_if_t<
-						std::is_floating_point< Scalar >::value >,
+						std::is_floating_point< Scalar >::value
+				>,
 				typename = std::enable_if_t<
-						lib::LessEq< Dim, MAX_DIM >::value >,
+						lib::LessEq< Dim, MAX_DIM >::value
+				>,
 				typename = std::enable_if_t<
-						lib::Greater< Dim, 0 >::value >
+						lib::Greater< Dim, 0 >::value
 				>
-		struct ComponentBasedConcept {
-		};
+		>
+		struct ComponentBasedConcept
+		{ };
 
 
 		template < typename Derived, typename Scalar, size_t Dim >
@@ -77,18 +80,18 @@ namespace geo {
 
 
 		template <
-			typename Derived,
-			typename Scalar,
-			size_t Dim
+				typename Derived,
+				typename Scalar,
+				size_t Dim
 		>
 		struct ComponentBased
 				: public std::array< Scalar, Dim >
 				, public ComponentBasedConcept< Scalar, Dim >
 				, public ComponentBasedMixinCumulative<
-						ComponentBased<Derived, Scalar, Dim>,
-						Scalar,
-						Dim
-						>
+					ComponentBased<Derived, Scalar, Dim>,
+					Scalar,
+					Dim
+				>
 		{
 			friend
 			std::ostream & operator <<( std::ostream &o, Derived const &v ) {
@@ -126,7 +129,7 @@ namespace geo {
 						[] ( auto &&a, auto &&b ) { return a + b; },
 						lhs,
 						rhs
-						);
+				);
 			}
 			template < typename Lhs, typename Rhs >
 			static
@@ -135,7 +138,7 @@ namespace geo {
 						[] ( auto &&a, auto &&b ) { return a + b; },
 						lhs,
 						rhs
-						);
+				);
 			}
 
 
@@ -145,8 +148,7 @@ namespace geo {
 					Op op,
 					A &a,
 					B const &b
-					) {
-
+			) {
 				lib::forIndexed(
 						a,
 						[&b, &op] ( auto &&value, size_t i ) {
@@ -160,7 +162,7 @@ namespace geo {
 					typename Op,
 					typename A,
 					typename B
-					>
+			>
 			static
 			ComponentBasedReturn binaryOp( Op op, A const &a, B const &b ) {
 				ComponentBasedReturn ret(a);

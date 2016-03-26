@@ -12,16 +12,16 @@ namespace geo {
 		template < typename Derived, typename Scalar, size_t Dim >
 		struct VectorBase
 				: public ComponentBased<
-						VectorBase< Derived, Scalar, Dim >,
-						Scalar,
-						Dim
-						>
+					VectorBase< Derived, Scalar, Dim >,
+					Scalar,
+					Dim
+				>
 		{
 			using Base = ComponentBased<
 					VectorBase< Derived, Scalar, Dim >,
 					Scalar,
 					Dim
-					>;
+			>;
 			using Base::Base;
 
 			Derived &operator +=( Derived const &other ) {
