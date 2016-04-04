@@ -14,7 +14,7 @@ lib_roots = [
 		"src/geo",
 		"src/lib",
 		"external/gtest",
-		"tests/unit"
+		"tests/unit/geo"
 		]
 
 bins = [
@@ -49,7 +49,7 @@ def build(bld):
 
 	for test in test_bins:
 		bld.program(
-				source=["{t}.cpp".format(t=test)] + srcs, 
+				source=["{t}.cpp".format(t=test)] + srcs,
 				target="{bin}/{bin_name}".format(
 						bin=bin_dir, bin_name=path.basename(test)),
 				includes=include_paths
