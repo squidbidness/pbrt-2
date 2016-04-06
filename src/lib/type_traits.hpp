@@ -1,6 +1,7 @@
 #ifndef TYPE_TRAITS_HPP_EEF0693F
 #define TYPE_TRAITS_HPP_EEF0693F
 
+#include <cstddef>
 #include <type_traits>
 
 namespace lib {
